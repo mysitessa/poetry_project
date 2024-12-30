@@ -22,7 +22,7 @@ class ChoiseFile(QMainWindow, Ui_MainWindow):
         self.setWindowTitle('Учи стихи легко!')
         self.initUI()
         self.iteration_counter = 0
-        self.con = sqlite3.connect('/Users/angelinacekoeva/Desktop/tsekoeva/BaseDate.sqlite')
+        self.con = sqlite3.connect('BaseDate.sqlite')
         self.cur = self.con.cursor()
         self.res = self.cur.execute("""SELECT count FROM poetry_count""").fetchall()
         self.kolvo_learn_poetry.setText(f'Кол-во выуч. стихов: {self.res[0][0]}')
@@ -80,7 +80,7 @@ class ChoiseFile(QMainWindow, Ui_MainWindow):
 
     def click_choiseFromBD_ose(self):
         self.current_text = self.sp_ossetian_poetry.currentText()
-        con = sqlite3.connect('/Users/angelinacekoeva/Desktop/tsekoeva/BaseDate.sqlite')
+        con = sqlite3.connect('BaseDate.sqlite')
         cur = con.cursor()
         self.result = cur.execute(f"SELECT text FROM poetry WHERE title = '{self.current_text}'").fetchall()
         self.text = self.result[0][0]
@@ -149,7 +149,7 @@ class Delete(QMainWindow, Ui_delete_win):
             for i in range(self.sp_oset.count()):
                 if self.delete_win_sp_poetry.currentText() in self.sp_oset.itemText(i):
                     self.sp_oset.removeItem(self.sp_oset.findText(self.delete_win_sp_poetry.currentText()))
-                    con = sqlite3.connect('/Users/angelinacekoeva/Desktop/tsekoeva/BaseDate.sqlite')
+                    con = sqlite3.connect('BaseDate.sqlite')
                     cur = con.cursor()
                     cur.execute(f"DELETE FROM poetry WHERE title = '{self.delete_win_sp_poetry.currentText()}'")
                     self.oset_items.remove(self.delete_win_sp_poetry.currentText())
@@ -165,7 +165,7 @@ class Delete(QMainWindow, Ui_delete_win):
             for i in range(self.sp_rus.count()):
                 if self.delete_win_sp_poetry.currentText() in self.sp_rus.itemText(i):
                     self.sp_rus.removeItem(self.sp_rus.findText(self.delete_win_sp_poetry.currentText()))
-                    con = sqlite3.connect('/Users/angelinacekoeva/Desktop/tsekoeva/BaseDate.sqlite')
+                    con = sqlite3.connect('BaseDate.sqlite')
                     cur = con.cursor()
                     cur.execute(f"DELETE FROM poetry WHERE title = '{self.delete_win_sp_poetry.currentText()}'")
                     self.rus_items.remove(self.delete_win_sp_poetry.currentText())
@@ -202,7 +202,7 @@ class Add_PoetryToBD(QMainWindow, Ui_inf_win):
     def Add_poetry_to_SP(self):
         if self.check_Lang:
             self.lang = 'oset'
-            con = sqlite3.connect('/Users/angelinacekoeva/Desktop/tsekoeva/BaseDate.sqlite')
+            con = sqlite3.connect('BaseDate.sqlite')
             cur = con.cursor()
             if len(self.inf_win_poetry_text.toPlainText()) > 0 and len(self.inf_win_poetry_name.text()) > 0 and len(
                     self.inf_win_autor_name.text()) > 0 and self.check_Lang != None:
@@ -223,7 +223,7 @@ class Add_PoetryToBD(QMainWindow, Ui_inf_win):
 
         elif self.check_Lang == False:
             self.lang = 'ru'
-            con = sqlite3.connect('/Users/angelinacekoeva/Desktop/tsekoeva/BaseDate.sqlite')
+            con = sqlite3.connect('BaseDate.sqlite')
             cur = con.cursor()
             if len(self.inf_win_poetry_text.toPlainText()) > 0 and len(self.inf_win_poetry_name.text()) > 0 and len(
                     self.inf_win_autor_name.text()) > 0 and self.check_Lang != None:
@@ -434,7 +434,7 @@ class TaskPassWord(QMainWindow, Ui_pass_word):
             self.hide()
         if self.iteration_count == len(self.split_sp_text):
             self.hide()
-            con = sqlite3.connect('/Users/angelinacekoeva/Desktop/tsekoeva/BaseDate.sqlite')
+            con = sqlite3.connect('BaseDate.sqlite')
             cur = con.cursor()
             res = cur.execute("""SELECT count FROM poetry_count""").fetchall()
             cur.execute(f"UPDATE poetry_count SET count = '{res[0][0] + 1}'")
